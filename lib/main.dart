@@ -1,122 +1,137 @@
 import 'package:flutter/material.dart';
+import 'app_theme.dart';
+
+// USER Screens
+import 'user/screens/splash_screen.dart';
+import 'user/screens/onboarding_screen.dart';
+import 'user/screens/language_selection_screen.dart';
+import 'user/screens/tutorial_screen.dart';
+import 'user/screens/login_screen.dart';
+import 'user/screens/otp_verification_screen.dart';
+import 'user/screens/dashboard_screen.dart';
+import 'user/screens/voucher_list_screen.dart';
+import 'user/screens/voucher_detail_screen.dart';
+import 'user/screens/medical_history_screen.dart';
+import 'user/screens/visit_detail_screen.dart';
+import 'user/screens/lab_result_detail_screen.dart';
+import 'user/screens/notifications_screen.dart';
+import 'user/screens/notification_detail_screen.dart';
+import 'user/screens/consent_overview_screen.dart';
+import 'user/screens/consent_detail_screen.dart';
+import 'user/screens/consent_history_screen.dart';
+import 'user/screens/profile_screen.dart';
+import 'user/screens/edit_profile_screen.dart';
+import 'user/screens/device_linking_screen.dart';
+import 'user/screens/biometric_link_request_screen.dart';
+import 'user/screens/download_pdf_screen.dart';
+import 'user/screens/help_faq_screen.dart';
+import 'user/screens/contact_support_screen.dart';
+import 'user/screens/settings_screen.dart';
+
+// Newly added screens
+import 'user/screens/feedback_screen.dart';
+import 'user/screens/health_id_screen.dart';
+import 'user/screens/prescriptions_screen.dart';
+import 'user/screens/privacy_policy_screen.dart';
+import 'user/screens/qr_display_screen.dart';
+import 'user/screens/qr_scan_screen.dart';
+import 'user/screens/terms_conditions_screen.dart';
+import 'user/screens/vaccination_record_screen.dart';
+import 'user/screens/voucher_redemption_history_screen.dart';
+import 'user/screens/wallet_screen.dart';
+
+// Models
+import 'user/models/worker.dart';
+import 'user/models/voucher.dart';
+import 'user/models/notification.dart';
+import 'user/models/consent.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(DHRMSUserApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class DHRMSUserApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      title: 'DHRMS - User',
+      theme: AppTheme.lightTheme,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.routeName,
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+      // Screens without parameters
+      routes: {
+        SplashScreen.routeName: (_) => SplashScreen(),
+        OnboardingScreen.routeName: (_) => OnboardingScreen(),
+        LanguageSelectionScreen.routeName: (_) => LanguageSelectionScreen(),
+        TutorialScreen.routeName: (_) => TutorialScreen(),
+        LoginScreen.routeName: (_) => LoginScreen(),
+        OtpVerificationScreen.routeName: (_) => OtpVerificationScreen(),
+        DashboardScreen.routeName: (_) => DashboardScreen(),
+        VoucherListScreen.routeName: (_) => VoucherListScreen(),
+        MedicalHistoryScreen.routeName: (_) => MedicalHistoryScreen(),
+        ConsentOverviewScreen.routeName: (_) => ConsentOverviewScreen(),
+        ProfileScreen.routeName: (_) => ProfileScreen(),
+        DeviceLinkingScreen.routeName: (_) => DeviceLinkingScreen(),
+        BiometricLinkRequestScreen.routeName: (_) => BiometricLinkRequestScreen(),
+        DownloadPdfScreen.routeName: (_) => DownloadPdfScreen(),
+        HelpFaqScreen.routeName: (_) => HelpFaqScreen(),
+        ContactSupportScreen.routeName: (_) => ContactSupportScreen(),
+        SettingsScreen.routeName: (_) => SettingsScreen(),
+        ConsentHistoryScreen.routeName: (_) => ConsentHistoryScreen(),
+        NotificationsScreen.routeName: (_) => NotificationsScreen(),
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+        // Newly added
+        FeedbackScreen.routeName: (_) => FeedbackScreen(),
+        HealthIdScreen.routeName: (_) => HealthIdScreen(),
+        PrescriptionsScreen.routeName: (_) => PrescriptionsScreen(),
+        PrivacyPolicyScreen.routeName: (_) => PrivacyPolicyScreen(),
+        QrDisplayScreen.routeName: (_) => QrDisplayScreen(),
+        QrScanScreen.routeName: (_) => QrScanScreen(),
+        TermsConditionsScreen.routeName: (_) => TermsConditionsScreen(),
+        VaccinationRecordScreen.routeName: (_) => VaccinationRecordScreen(),
+        VoucherRedemptionHistoryScreen.routeName: (_) => VoucherRedemptionHistoryScreen(),
+        WalletScreen.routeName: (_) => WalletScreen(),
+      },
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+      // Screens with required parameters
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case VoucherDetailScreen.routeName:
+            final args = settings.arguments as Voucher;
+            return MaterialPageRoute(
+              builder: (_) => VoucherDetailScreen(
+                title: args.type,
+                expiry: args.validTo.toIso8601String(),
+                status: args.redeemed ? 'Redeemed' : 'Active',
+              ),
+            );
 
-  final String title;
+          case NotificationDetailScreen.routeName:
+            final args = settings.arguments as AppNotification;
+            return MaterialPageRoute(
+              builder: (_) => NotificationDetailScreen(notification: args),
+            );
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+          case ConsentDetailScreen.routeName:
+            final args = settings.arguments as Consent;
+            return MaterialPageRoute(
+              builder: (_) => ConsentDetailScreen(consent: args),
+            );
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+          case EditProfileScreen.routeName:
+            final args = settings.arguments as Worker;
+            return MaterialPageRoute(
+              builder: (_) => EditProfileScreen(worker: args),
+            );
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          default:
+            return MaterialPageRoute(
+              builder: (_) => DashboardScreen(), // fallback
+            );
+        }
+      },
     );
   }
 }
