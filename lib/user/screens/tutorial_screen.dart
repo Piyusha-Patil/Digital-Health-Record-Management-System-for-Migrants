@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
+import '../services/google_translate_service.dart';
 
 class TutorialScreen extends StatefulWidget {
   static const String routeName = '/tutorial';
@@ -19,7 +21,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Quick Tour')),
+      appBar: AppBar(title: const TranslatorText('Quick Tour')),
       body: Column(
         children: [
           Expanded(
@@ -32,9 +34,15 @@ class _TutorialScreenState extends State<TutorialScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(pages[i]['title']!, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                    TranslatorText(
+                      pages[i]['title']!,
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(height: 12),
-                    Text(pages[i]['body']!, textAlign: TextAlign.center),
+                    TranslatorText(
+                      pages[i]['body']!,
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 30),
                     Icon(Icons.mobile_friendly, size: 90, color: Theme.of(context).primaryColor),
                   ],
@@ -45,16 +53,24 @@ class _TutorialScreenState extends State<TutorialScreen> {
           Padding(
             padding: EdgeInsets.fromLTRB(20, 8, 20, 18),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              TextButton(onPressed: () => Navigator.pop(context), child: Text('Skip')),
-              Row(children: List.generate(pages.length, (i) => Container(
-                margin: EdgeInsets.symmetric(horizontal: 4),
-                width: index == i ? 18 : 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: index == i ? Theme.of(context).primaryColor : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(12),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const TranslatorText('Skip'),
+              ),
+              Row(
+                children: List.generate(
+                  pages.length,
+                      (i) => Container(
+                    margin: EdgeInsets.symmetric(horizontal: 4),
+                    width: index == i ? 18 : 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: index == i ? Theme.of(context).primaryColor : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
-              ))),
+              ),
               ElevatedButton(
                 onPressed: () {
                   if (index < pages.length - 1) {
@@ -63,7 +79,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text(index < pages.length - 1 ? 'Next' : 'Done'),
+                child: TranslatorText(index < pages.length - 1 ? 'Next' : 'Done'),
               )
             ]),
           )

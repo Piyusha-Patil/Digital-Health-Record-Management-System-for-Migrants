@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // Updated import
 
 class PrescriptionsScreen extends StatefulWidget {
   static const String routeName = '/prescriptions';
@@ -38,11 +39,11 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
 
   Future<void> _downloadPrescription(String id) async {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Preparing download (mock)...')),
+      SnackBar(content: TranslatorText('Preparing download (mock)...')),
     );
     await Future.delayed(const Duration(milliseconds: 800));
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Prescription $id downloaded (mock)')),
+      SnackBar(content: TranslatorText('Prescription $id downloaded (mock)')),
     );
   }
 
@@ -57,7 +58,7 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
       builder: (ctx) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(ctx).size.height * 0.85, // max 85% of screen
+            maxHeight: MediaQuery.of(ctx).size.height * 0.85,
           ),
           child: SingleChildScrollView(
             padding: EdgeInsets.only(
@@ -94,7 +95,7 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
                   const SizedBox(height: 12),
                   const Divider(),
                   const SizedBox(height: 8),
-                  const Text(
+                  const TranslatorText(
                     'Medicines',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -109,7 +110,7 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
                     );
                   })),
                   const SizedBox(height: 8),
-                  Text('Notes: ${p['notes'] ?? '-'}'),
+                  TranslatorText('Notes: ${p['notes'] ?? '-'}'),
                   const SizedBox(height: 12),
                   Row(
                     children: [
@@ -120,7 +121,7 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
                             _downloadPrescription(p['id']);
                           },
                           icon: const Icon(Icons.download),
-                          label: const Text('Download'),
+                          label: const TranslatorText('Download'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: NAVY,
                             foregroundColor: Colors.white,
@@ -133,11 +134,11 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
                           onPressed: () {
                             Navigator.pop(ctx);
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Shared (mock)')),
+                              SnackBar(content: TranslatorText('Shared (mock)')),
                             );
                           },
                           icon: const Icon(Icons.share),
-                          label: const Text('Share'),
+                          label: const TranslatorText('Share'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: NAVY,
                             foregroundColor: Colors.white,
@@ -156,14 +157,13 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text('My Prescriptions'),
+        title: const TranslatorText('My Prescriptions'),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
@@ -175,7 +175,7 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
             children: const [
               Icon(Icons.note_alt, size: 64, color: Colors.black26),
               SizedBox(height: 12),
-              Text(
+              TranslatorText(
                 'No prescriptions available',
                 style: TextStyle(color: Colors.black54),
               ),
@@ -195,11 +195,11 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
               ),
               child: ListTile(
                 onTap: () => _showPrescriptionDetail(p),
-                title: Text(
+                title: TranslatorText(
                   'Prescription • ${p['date']}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text('${p['clinic']} • Dr. ${p['doctor']}'),
+                subtitle: TranslatorText('${p['clinic']} • Dr. ${p['doctor']}'),
                 trailing: SizedBox(
                   height: 56,
                   child: Column(
@@ -207,16 +207,14 @@ class _PrescriptionsScreenState extends State<PrescriptionsScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () =>
-                            _downloadPrescription(p['id']),
+                        onPressed: () => _downloadPrescription(p['id']),
                         icon: const Icon(Icons.download, color: NAVY),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                         tooltip: 'Download',
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: NAVY,
                           borderRadius: BorderRadius.circular(8),

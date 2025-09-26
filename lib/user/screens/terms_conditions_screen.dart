@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
+import '../services/google_translate_service.dart';
 
 class TermsConditionsScreen extends StatelessWidget {
   static const String routeName = '/termsConditions';
@@ -19,7 +21,7 @@ class TermsConditionsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("Terms & Conditions"),
+        title: const TranslatorText("Terms & Conditions"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: ListView.separated(
@@ -29,7 +31,7 @@ class TermsConditionsScreen extends StatelessWidget {
         itemBuilder: (context, index) => Card(
           child: ListTile(
             leading: const Icon(Icons.check_circle_outline, color: NAVY),
-            title: Text(terms[index]),
+            title: TranslatorText(terms[index]),
           ),
         ),
       ),

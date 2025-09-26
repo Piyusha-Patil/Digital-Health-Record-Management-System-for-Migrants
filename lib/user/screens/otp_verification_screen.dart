@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'dashboard_screen.dart';
+import '../widgets/translator_text.dart'; // Updated import
 
 class OtpVerificationScreen extends StatefulWidget {
   static const String routeName = '/otp';
@@ -22,7 +23,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   _verify() async {
     if (phone == null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Missing phone number')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: TranslatorText('Missing phone number')),
+      );
       return;
     }
     setState(() => _loading = true);
@@ -31,7 +34,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     if (ok) {
       Navigator.pushNamedAndRemoveUntil(context, DashboardScreen.routeName, (route) => false);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid OTP')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: TranslatorText('Invalid OTP')),
+      );
     }
   }
 
@@ -45,21 +50,35 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget build(BuildContext context) {
     final displayPhone = phone ?? '';
     return Scaffold(
-      appBar: AppBar(title: Text('Verify OTP')),
+      appBar: AppBar(title: TranslatorText('Verify OTP')),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(children: [
-          Text('We sent an OTP to $displayPhone', style: TextStyle(fontSize: 16)),
-          SizedBox(height: 12),
+          TranslatorText('We sent an OTP to $displayPhone', style: const TextStyle(fontSize: 16)),
+          const SizedBox(height: 12),
           TextField(
             controller: _otpCtrl,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(hintText: 'Enter 6-digit OTP'),
+            decoration: InputDecoration(
+              hintText: 'Enter 6-digit OTP',
+            ),
           ),
-          SizedBox(height: 16),
-          ElevatedButton(onPressed: _loading ? null : _verify, child: _loading ? CircularProgressIndicator(color: Colors.white) : Text('Verify')),
-          SizedBox(height: 8),
-          TextButton(onPressed: () => AuthService.instance.sendOtp(displayPhone), child: Text('Resend OTP')),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _loading ? null : _verify,
+            child: _loading
+                ? const SizedBox(
+              height: 18,
+              width: 18,
+              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+            )
+                : TranslatorText('Verify'),
+          ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: () => AuthService.instance.sendOtp(displayPhone),
+            child: TranslatorText('Resend OTP'),
+          ),
         ]),
       ),
     );

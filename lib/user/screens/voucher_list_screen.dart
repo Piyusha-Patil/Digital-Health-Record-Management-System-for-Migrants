@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'voucher_detail_screen.dart';
 import '../widgets/voucher_card_widget.dart';
+import '../widgets/translator_text.dart'; // Added TranslatorText import
+import '../services/google_translate_service.dart';
 
 class VoucherListScreen extends StatelessWidget {
   static const String routeName = '/vouchers';
@@ -19,7 +21,7 @@ class VoucherListScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
+        title: const TranslatorText(
           "My Vouchers",
           style: TextStyle(color: Colors.yellow),
         ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart';
+import '../services/google_translate_service.dart';
 
 class VoucherRedemptionHistoryScreen extends StatelessWidget {
   static const String routeName = '/voucherRedemptionHistory';
@@ -18,7 +20,7 @@ class VoucherRedemptionHistoryScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("Voucher History"),
+        title: const TranslatorText("Voucher History"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: ListView.builder(
@@ -29,8 +31,8 @@ class VoucherRedemptionHistoryScreen extends StatelessWidget {
           return Card(
             child: ListTile(
               leading: const Icon(Icons.redeem, color: NAVY),
-              title: Text(h["voucher"]!),
-              subtitle: Text("Date: ${h["date"]}"),
+              title: TranslatorText(h["voucher"]!),
+              subtitle: TranslatorText("Date: ${h["date"]}"),
               trailing: Text(
                 h["status"]!,
                 style: TextStyle(

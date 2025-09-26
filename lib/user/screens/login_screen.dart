@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'otp_verification_screen.dart';
+import '../widgets/translator_text.dart'; // Added import
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login';
@@ -22,7 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (ok) {
       Navigator.pushNamed(context, OtpVerificationScreen.routeName, arguments: {'phone': phone});
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Unable to send OTP. Try later.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: TranslatorText('Unable to send OTP. Try later.')),
+      );
     }
   }
 
@@ -36,33 +39,35 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign in / Register'),
+        title: TranslatorText('Sign in / Register'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Text('Enter mobile number', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 8),
+            TranslatorText('Enter mobile number', style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 8),
             TextFormField(
               controller: _phoneCtrl,
               keyboardType: TextInputType.phone,
-              decoration: InputDecoration(prefixText: '+91 ', hintText: '9999999999'),
+              decoration: const InputDecoration(prefixText: '+91 ', hintText: '9999999999'),
               validator: (v) {
                 if (v == null || v.trim().length < 6) return 'Enter valid phone';
                 return null;
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _loading ? null : _sendOtp,
-              child: _loading ? CircularProgressIndicator(color: Colors.white) : Text('Send OTP'),
+              child: _loading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : TranslatorText('Send OTP'),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             TextButton(
               onPressed: () => Navigator.pushNamed(context, '/'), // placeholder
-              child: Text('Scan QR card instead'),
+              child: TranslatorText('Scan QR card instead'),
             )
           ]),
         ),

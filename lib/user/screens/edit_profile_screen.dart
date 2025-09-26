@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/worker.dart';
+import '../widgets/translator_text.dart'; // Import the translator widget
 
 class EditProfileScreen extends StatefulWidget {
   final Worker worker;
@@ -32,8 +33,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _save() {
-    // In production: validate & call firebase update
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Profile updated')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: TranslatorText('Profile updated')),
+    );
     Navigator.pop(context);
   }
 
@@ -41,18 +43,51 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(title: Text('Edit Profile', style: TextStyle(color: Colors.yellow)), backgroundColor: Colors.black),
+      appBar: AppBar(
+        title: TranslatorText('Edit Profile', style: TextStyle(color: Colors.yellow)),
+        backgroundColor: Colors.black,
+      ),
       body: Padding(
         padding: EdgeInsets.all(12),
-        child: Column(children: [
-          TextField(controller: _nameCtrl, decoration: InputDecoration(labelText: 'Name', labelStyle: TextStyle(color: Colors.yellow), enabledBorder: OutlineInputBorder()), style: TextStyle(color: Colors.white)),
-          SizedBox(height: 12),
-          TextField(controller: _ageCtrl, keyboardType: TextInputType.number, decoration: InputDecoration(labelText: 'Age', enabledBorder: OutlineInputBorder()), style: TextStyle(color: Colors.white)),
-          SizedBox(height: 12),
-          TextField(controller: _originCtrl, decoration: InputDecoration(labelText: 'Origin', enabledBorder: OutlineInputBorder()), style: TextStyle(color: Colors.white)),
-          SizedBox(height: 20),
-          ElevatedButton(onPressed: _save, style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow, foregroundColor: Colors.black), child: Text('Save')),
-        ]),
+        child: Column(
+          children: [
+            TextField(
+              controller: _nameCtrl,
+              decoration: InputDecoration(
+                labelText: 'Name',
+                labelStyle: TextStyle(color: Colors.yellow),
+                enabledBorder: OutlineInputBorder(),
+              ),
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(height: 12),
+            TextField(
+              controller: _ageCtrl,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Age',
+                enabledBorder: OutlineInputBorder(),
+              ),
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(height: 12),
+            TextField(
+              controller: _originCtrl,
+              decoration: InputDecoration(
+                labelText: 'Origin',
+                enabledBorder: OutlineInputBorder(),
+              ),
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _save,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow, foregroundColor: Colors.black),
+              child: TranslatorText('Save'),
+            ),
+          ],
+        ),
       ),
     );
   }

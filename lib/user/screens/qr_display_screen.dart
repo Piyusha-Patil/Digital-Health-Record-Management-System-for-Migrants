@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
 
 class QrDisplayScreen extends StatelessWidget {
   static const String routeName = '/qrDisplay';
@@ -13,7 +14,7 @@ class QrDisplayScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("My QR Code"),
+        title: const TranslatorText("My QR Code"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
@@ -30,13 +31,15 @@ class QrDisplayScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text("UHID: $uhid", style: const TextStyle(fontWeight: FontWeight.bold)),
+          TranslatorText("UHID: $uhid", style: const TextStyle(fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("QR Downloaded (mock)"))),
+            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: TranslatorText("QR Downloaded (mock)")),
+            ),
             style: ElevatedButton.styleFrom(backgroundColor: NAVY),
             icon: const Icon(Icons.download),
-            label: const Text("Download QR"),
+            label: const TranslatorText("Download QR"),
           ),
         ]),
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // Added TranslatorText import
+import '../services/google_translate_service.dart';
 
 class VoucherDetailScreen extends StatelessWidget {
   final String title;
@@ -18,7 +20,7 @@ class VoucherDetailScreen extends StatelessWidget {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text(
+        title: const TranslatorText(
           "Voucher Details",
           style: TextStyle(color: Colors.yellow),
         ),
@@ -29,7 +31,7 @@ class VoucherDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            TranslatorText(
               title,
               style: const TextStyle(
                 color: Colors.yellow,
@@ -42,7 +44,7 @@ class VoucherDetailScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.event, color: Colors.yellow),
                 const SizedBox(width: 8),
-                Text(
+                TranslatorText(
                   "Expiry: $expiry",
                   style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
@@ -53,7 +55,7 @@ class VoucherDetailScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.verified, color: Colors.yellow),
                 const SizedBox(width: 8),
-                Text(
+                TranslatorText(
                   "Status: $status",
                   style: TextStyle(
                     color: status == "Active" ? Colors.green : Colors.red,
@@ -69,7 +71,7 @@ class VoucherDetailScreen extends StatelessWidget {
                 // Handle redeem action
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text("Voucher redeemed successfully!"),
+                    content: TranslatorText("Voucher redeemed successfully!"),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -84,7 +86,7 @@ class VoucherDetailScreen extends StatelessWidget {
                 ),
               ),
               icon: const Icon(Icons.redeem),
-              label: const Text(
+              label: const TranslatorText(
                 "Redeem Voucher",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),

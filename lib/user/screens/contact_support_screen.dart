@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // Import the translator widget
 
 class ContactSupportScreen extends StatefulWidget {
   static const String routeName = '/contact_support';
@@ -23,7 +24,11 @@ class _ContactSupportScreenState extends State<ContactSupportScreen> {
     setState(() => _sending = true);
     await Future.delayed(Duration(milliseconds: 700)); // mock
     setState(() => _sending = false);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Support request sent')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: TranslatorText('Support request sent'),
+      ),
+    );
     _msgCtrl.clear();
   }
 
@@ -31,23 +36,39 @@ class _ContactSupportScreenState extends State<ContactSupportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(title: Text('Contact Support', style: TextStyle(color: Colors.yellow)), backgroundColor: Colors.black),
+      appBar: AppBar(
+        title: TranslatorText(
+          'Contact Support',
+          style: TextStyle(color: Colors.yellow),
+        ),
+        backgroundColor: Colors.black,
+      ),
       body: Padding(
         padding: EdgeInsets.all(12),
-        child: Column(children: [
-          TextField(
-            controller: _msgCtrl,
-            maxLines: 6,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(hintText: 'Describe your issue', filled: true, fillColor: Colors.grey[900]),
-          ),
-          SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: _sending ? null : _send,
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow, foregroundColor: Colors.black),
-            child: _sending ? CircularProgressIndicator(color: Colors.black) : Text('Send'),
-          )
-        ]),
+        child: Column(
+          children: [
+            TextField(
+              controller: _msgCtrl,
+              maxLines: 6,
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Describe your issue', // Optional: can translate hint dynamically
+                hintStyle: TextStyle(color: Colors.white54),
+                filled: true,
+                fillColor: Colors.grey[900],
+              ),
+            ),
+            SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: _sending ? null : _send,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.yellow, foregroundColor: Colors.black),
+              child: _sending
+                  ? CircularProgressIndicator(color: Colors.black)
+                  : TranslatorText('Send'),
+            ),
+          ],
+        ),
       ),
     );
   }

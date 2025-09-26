@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // Import the translator widget
 
 class FeedbackScreen extends StatefulWidget {
   static const String routeName = '/feedback';
@@ -49,13 +50,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate() || _rating == 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please add a subject and rating.')),
+        SnackBar(content: TranslatorText('Please add a subject and rating.')),
       );
       return;
     }
     setState(() => _submitting = true);
 
-    // Simulate network call
     await Future.delayed(const Duration(seconds: 1));
 
     setState(() {
@@ -68,7 +68,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Thank you — feedback submitted.')),
+      SnackBar(content: TranslatorText('Thank you — feedback submitted.')),
     );
   }
 
@@ -76,7 +76,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Send Feedback'),
+        title: TranslatorText('Send Feedback'),
         backgroundColor: NAVY,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -91,9 +91,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             child: Form(
               key: _formKey,
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const Text('We value your feedback', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                TranslatorText('We value your feedback', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
-                const Text('Tell us about your experience so we can improve the system.', style: TextStyle(color: Colors.black87)),
+                TranslatorText(
+                  'Tell us about your experience so we can improve the system.',
+                  style: TextStyle(color: Colors.black87),
+                ),
                 const SizedBox(height: 16),
 
                 // Subject
@@ -104,16 +107,19 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     labelStyle: const TextStyle(color: NAVY),
                     border: const OutlineInputBorder(),
                   ),
-                  validator: (v) => (v == null || v.trim().isEmpty) ? 'Subject is required' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Subject is required'
+                      : null,
                 ),
                 const SizedBox(height: 12),
 
                 // Rating
-                const Text('Rate your experience', style: TextStyle(fontWeight: FontWeight.bold)),
+                TranslatorText('Rate your experience', style: TextStyle(fontWeight: FontWeight.bold)),
                 Row(children: [
                   for (var i = 1; i <= 5; i++) _buildStar(i),
                   const SizedBox(width: 8),
-                  Text(_rating == 0 ? '(not rated)' : '$_rating/5', style: const TextStyle(color: Colors.black54)),
+                  Text(_rating == 0 ? '(not rated)' : '$_rating/5',
+                      style: const TextStyle(color: Colors.black54)),
                 ]),
                 const SizedBox(height: 12),
 
@@ -133,7 +139,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 TextFormField(
                   controller: _phoneCtrl,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Phone (optional)'),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: 'Phone (optional)',
+                  ),
                 ),
                 const SizedBox(height: 12),
 
@@ -143,7 +152,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     activeColor: NAVY,
                     onChanged: (v) => setState(() => _allowFollowup = v ?? false),
                   ),
-                  const Expanded(child: Text('I allow a representative to contact me for follow-up')),
+                  const Expanded(child: TranslatorText('I allow a representative to contact me for follow-up')),
                 ]),
                 const SizedBox(height: 16),
 
@@ -153,8 +162,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     onPressed: _submitting ? null : _submit,
                     style: ElevatedButton.styleFrom(backgroundColor: NAVY),
                     child: _submitting
-                        ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                        : const Text('Submit Feedback'),
+                        ? const SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                        : TranslatorText('Submit Feedback'),
                   ),
                 ),
               ]),

@@ -8,27 +8,34 @@ class AppTheme {
 
   static final ThemeData lightTheme = ThemeData(
     primaryColor: primary,
-    colorScheme: ColorScheme.fromSwatch(primarySwatch: _createMaterialColor(primary)).copyWith(secondary: accent),
-    appBarTheme: AppBarTheme(
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: _createMaterialColor(primary),
+    ).copyWith(secondary: accent),
+    appBarTheme: const AppBarTheme(
       backgroundColor: primary,
       foregroundColor: Colors.white,
       elevation: 0,
     ),
     scaffoldBackgroundColor: Colors.grey[50],
-    cardTheme: CardTheme(
-      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
+    // Use CardThemeData here
+    cardTheme: CardThemeData(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     ),
+
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primary,
         foregroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
       ),
     ),
   );

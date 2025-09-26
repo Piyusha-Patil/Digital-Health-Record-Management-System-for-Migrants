@@ -5,6 +5,8 @@ import '../models/worker.dart';
 import '../models/voucher.dart';
 import '../models/notification.dart';
 import '../widgets/qr_card_widget.dart';
+import '../widgets/translator_text.dart';
+import '../utils/translation_helper.dart';
 
 // Existing imports
 import 'medical_history_screen.dart';
@@ -58,7 +60,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     if (_loading) {
       return Scaffold(
-        appBar: AppBar(title: Text('Dashboard')),
+        appBar: AppBar(title: TranslatorText('Dashboard')),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -66,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('My Health'),
+        title: TranslatorText('My Health'),
         backgroundColor: Colors.blue.shade800,
         actions: [
           IconButton(
@@ -88,7 +90,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               QRCardWidget(worker: _worker!),
               SizedBox(height: 16),
 
-
               GestureDetector(
                 onTap: () => Navigator.pushNamed(context, QrDisplayScreen.routeName),
                 child: Card(
@@ -103,8 +104,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       children: [
                         Icon(Icons.qr_code, color: Colors.yellow, size: 40),
                         SizedBox(width: 12),
-                        Text(
-                          "Show My QR",
+                        TranslatorText(
+                          'Show My QR',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -112,21 +113,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         Spacer(),
-                        Icon(Icons.arrow_forward_ios,
-                            size: 20, color: Colors.white70),
+                        Icon(Icons.arrow_forward_ios, size: 20, color: Colors.white70),
                       ],
                     ),
                   ),
                 ),
               ),
 
+              SizedBox(height: 16),
 
               // 🔹 Quick actions grid
-              Text("Quick Actions",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold)),
+              TranslatorText(
+                'Quick Actions',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 8),
               GridView.count(
                 crossAxisCount: 3,
@@ -135,19 +138,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   _quickAction(
                     icon: Icons.card_giftcard,
-                    label: "Vouchers",
+                    label: 'Vouchers',
                     onTap: () =>
                         Navigator.pushNamed(context, VoucherListScreen.routeName),
                   ),
                   _quickAction(
                     icon: Icons.history,
-                    label: "Medical History",
+                    label: 'Medical History',
                     onTap: () =>
                         Navigator.pushNamed(context, MedicalHistoryScreen.routeName),
                   ),
                   _quickAction(
                     icon: Icons.lock,
-                    label: "Consent",
+                    label: 'Consent',
                     onTap: () =>
                         Navigator.pushNamed(context, ConsentOverviewScreen.routeName),
                   ),
@@ -157,25 +160,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // 🔹 Active vouchers card
               _sectionCard(
-                title: "Active Vouchers",
+                title: 'Active Vouchers',
                 child: _vouchers == null || _vouchers!.isEmpty
-                    ? Text("No active vouchers",
+                    ? TranslatorText('No active vouchers',
                     style: TextStyle(color: Colors.white70))
                     : Column(
                   children: _vouchers!
                       .map((v) => ListTile(
-                    title: Text('${v.type} • ${v.code}',
+                    title: TranslatorText(
+                        '${v.type} • ${v.code}',
                         style: TextStyle(color: Colors.white)),
-                    subtitle: Text(
+                    subtitle: TranslatorText(
                       'Valid until: ${v.validTo.toLocal().toString().split(" ").first}',
                       style: TextStyle(color: Colors.white70),
                     ),
-                    trailing: Text(
+                    trailing: TranslatorText(
                       v.redeemed ? 'Redeemed' : 'Active',
                       style: TextStyle(
-                          color: v.redeemed
-                              ? Colors.grey
-                              : Colors.yellow),
+                          color: v.redeemed ? Colors.grey : Colors.yellow),
                     ),
                     onTap: () => Navigator.pushNamed(
                         context, VoucherListScreen.routeName),
@@ -187,16 +189,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // 🔹 Notifications card
               _sectionCard(
-                title: "Notifications",
+                title: 'Notifications',
                 child: _notifications == null || _notifications!.isEmpty
-                    ? Text("No notifications",
+                    ? TranslatorText('No notifications',
                     style: TextStyle(color: Colors.white70))
                     : Column(
                   children: _notifications!
                       .map((n) => ListTile(
-                    title: Text(n.title,
+                    title: TranslatorText(n.title,
                         style: TextStyle(color: Colors.white)),
-                    subtitle: Text(n.body,
+                    subtitle: TranslatorText(n.body,
                         style: TextStyle(color: Colors.white70)),
                     onTap: () => Navigator.pushNamed(
                         context, NotificationsScreen.routeName),
@@ -208,26 +210,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // 🔹 More Services expandable
               _sectionCard(
-                title: "More Services",
+                title: 'More Services',
                 child: Column(
                   children: [
                     _serviceButton(
-                        context,
-                        Icons.medical_services,
-                        "My Prescriptions",
+                        context, Icons.medical_services, 'My Prescriptions',
                         PrescriptionsScreen.routeName),
                     _serviceButton(
-                        context,
-                        Icons.vaccines,
-                        "Vaccination Records",
+                        context, Icons.vaccines, 'Vaccination Records',
                         VaccinationRecordScreen.routeName),
-                    _serviceButton(context, Icons.account_balance_wallet,
-                        "My Wallet", WalletScreen.routeName),
-                    _serviceButton(context, Icons.feedback, "Give Feedback",
+                    _serviceButton(
+                        context, Icons.account_balance_wallet, 'My Wallet',
+                        WalletScreen.routeName),
+                    _serviceButton(
+                        context, Icons.feedback, 'Give Feedback',
                         FeedbackScreen.routeName),
-                    _serviceButton(context, Icons.qr_code, "Show My QR",
+                    _serviceButton(
+                        context, Icons.qr_code, 'Show My QR',
                         QrDisplayScreen.routeName),
-                    _serviceButton(context, Icons.qr_code_scanner, "Scan QR",
+                    _serviceButton(
+                        context, Icons.qr_code_scanner, 'Scan QR',
                         QrScanScreen.routeName),
                   ],
                 ),
@@ -255,7 +257,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               Icon(icon, size: 32, color: Colors.yellow),
               SizedBox(height: 8),
-              Text(label,
+              TranslatorText(label,
                   style: TextStyle(color: Colors.white, fontSize: 12),
                   textAlign: TextAlign.center),
             ],
@@ -275,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title,
+            TranslatorText(title,
                 style: TextStyle(
                     color: Colors.yellow,
                     fontSize: 16,
@@ -289,11 +291,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   // 🔹 Service button inside More Services
-  Widget _serviceButton(BuildContext context, IconData icon, String label,
-      String routeName) {
+  Widget _serviceButton(
+      BuildContext context, IconData icon, String label, String routeName) {
     return ListTile(
       leading: Icon(icon, color: Colors.yellow),
-      title: Text(label, style: TextStyle(color: Colors.white)),
+      title: TranslatorText(label, style: TextStyle(color: Colors.white)),
       onTap: () => Navigator.pushNamed(context, routeName),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/pdf_service.dart';
+import '../widgets/translator_text.dart'; // Import the translator widget
 
 class DownloadPdfScreen extends StatefulWidget {
   static const String routeName = '/download_pdf';
@@ -20,29 +21,41 @@ class _DownloadPdfScreenState extends State<DownloadPdfScreen> {
       _path = path;
       _busy = false;
     });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('PDF saved: $path')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: TranslatorText('PDF saved: $path')),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(title: Text('Download Medical PDF', style: TextStyle(color: Colors.yellow)), backgroundColor: Colors.black),
+      appBar: AppBar(
+        title: TranslatorText('Download Medical PDF', style: TextStyle(color: Colors.yellow)),
+        backgroundColor: Colors.black,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16),
-        child: Column(children: [
-          Text('Generate a consolidated medical history PDF for official use or sharing.', style: TextStyle(color: Colors.white)),
-          SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: _busy ? null : _generate,
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow, foregroundColor: Colors.black),
-            child: _busy ? CircularProgressIndicator(color: Colors.black) : Text('Generate PDF'),
-          ),
-          if (_path != null) ...[
+        child: Column(
+          children: [
+            TranslatorText(
+              'Generate a consolidated medical history PDF for official use or sharing.',
+              style: TextStyle(color: Colors.white),
+            ),
             SizedBox(height: 12),
-            Text('Saved at: $_path', style: TextStyle(color: Colors.grey[300])),
-          ]
-        ]),
+            ElevatedButton(
+              onPressed: _busy ? null : _generate,
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow, foregroundColor: Colors.black),
+              child: _busy
+                  ? CircularProgressIndicator(color: Colors.black)
+                  : TranslatorText('Generate PDF'),
+            ),
+            if (_path != null) ...[
+              SizedBox(height: 12),
+              TranslatorText('Saved at: $_path', style: TextStyle(color: Colors.grey[300])),
+            ],
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
 
 class QrScanScreen extends StatelessWidget {
   static const String routeName = '/qrScan';
@@ -12,7 +13,7 @@ class QrScanScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("Scan QR"),
+        title: const TranslatorText("Scan QR"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
@@ -29,13 +30,15 @@ class QrScanScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          const Text("Align QR code within the frame", style: TextStyle(color: Colors.black54)),
+          const TranslatorText("Align QR code within the frame", style: TextStyle(color: Colors.black54)),
           const SizedBox(height: 24),
           ElevatedButton.icon(
-            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Scanned Successfully (mock)"))),
+            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: TranslatorText("Scanned Successfully (mock)")),
+            ),
             style: ElevatedButton.styleFrom(backgroundColor: NAVY),
             icon: const Icon(Icons.check),
-            label: const Text("Simulate Scan"),
+            label: const TranslatorText("Simulate Scan"),
           ),
         ]),
       ),

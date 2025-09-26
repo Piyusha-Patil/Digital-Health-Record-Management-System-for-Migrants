@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
 
 class PrivacyPolicyScreen extends StatelessWidget {
   static const String routeName = '/privacyPolicy';
@@ -19,7 +20,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("Privacy Policy"),
+        title: const TranslatorText("Privacy Policy"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: ListView.builder(
@@ -29,7 +30,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 8),
           child: ListTile(
             leading: const Icon(Icons.privacy_tip, color: NAVY),
-            title: Text(policies[index]),
+            title: TranslatorText(policies[index]),
           ),
         ),
       ),

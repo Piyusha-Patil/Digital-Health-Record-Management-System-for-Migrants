@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart';
+import '../services/google_translate_service.dart';
 
 class WalletScreen extends StatelessWidget {
   static const String routeName = '/wallet';
@@ -19,7 +21,7 @@ class WalletScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("My Wallet"),
+        title: const TranslatorText("My Wallet"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(children: [
@@ -31,7 +33,7 @@ class WalletScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(children: [
-            const Text("Wallet Balance", style: TextStyle(color: Colors.white70)),
+            const TranslatorText("Wallet Balance", style: TextStyle(color: Colors.white70)),
             const SizedBox(height: 8),
             Text("₹$balance", style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
           ]),
@@ -45,8 +47,8 @@ class WalletScreen extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 child: ListTile(
                   leading: const Icon(Icons.account_balance_wallet, color: NAVY),
-                  title: Text(t["title"]!),
-                  subtitle: Text(t["date"]!),
+                  title: TranslatorText(t["title"]!),
+                  subtitle: TranslatorText(t["date"]!),
                   trailing: Text(
                     t["amount"]!,
                     style: TextStyle(

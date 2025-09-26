@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../widgets/translator_text.dart'; // added import
+import '../services/google_translate_service.dart';
 
 class VaccinationRecordScreen extends StatelessWidget {
   static const String routeName = '/vaccinationRecord';
@@ -18,7 +20,7 @@ class VaccinationRecordScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: NAVY,
-        title: const Text("Vaccination Records"),
+        title: const TranslatorText("Vaccination Records"),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: ListView.builder(
@@ -29,9 +31,9 @@ class VaccinationRecordScreen extends StatelessWidget {
           return Card(
             child: ListTile(
               leading: const Icon(Icons.vaccines, color: NAVY),
-              title: Text(r["vaccine"]!),
-              subtitle: Text("Date: ${r["date"]}"),
-              trailing: Text(
+              title: TranslatorText(r["vaccine"]!),
+              subtitle: TranslatorText("Date: ${r["date"]}"),
+              trailing: TranslatorText(
                 r["status"]!,
                 style: TextStyle(
                   color: r["status"] == "Completed" ? Colors.green : Colors.orange,
